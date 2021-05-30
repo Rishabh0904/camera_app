@@ -3,8 +3,8 @@ let body = document.querySelector("body");
 let filters = document.querySelectorAll(".filter")
 let vidbtn = document.querySelector("button#video");
 let imgbtn = document.querySelector("button#image");
-let zoomIn = document.addEventListener(".zoom-in");
-let zoomOut = document.addEventListener(".zoom-out");
+let zoomIn = document.querySelector(".zoom-in");
+let zoomOut = document.querySelector(".zoom-out");
 let constraints = { video: true };
 let mediaRecorder;
 let isRecording = false;
@@ -28,6 +28,7 @@ for (let i = 0; i < filters.length; i++) {
 // -----------------------zoom-in functionality-------------------------
 zoomIn.addEventListener("click", function(){
     let vidCurScale = video.style.transform.split("(")[1].split(")")[0];
+    // console.log(vidCurScale);
     if(vidCurScale > maxZoom){
         return;
     }else{
@@ -39,9 +40,9 @@ zoomIn.addEventListener("click", function(){
 
 // ----------------------zoom-out functionality--------------------------
 zoomOut.addEventListener("click", function(){
-    if(currZoom>maxZoom){
+    if(currZoom>minZoom){
         currZoom = currZoom - 0.1;
-        video.style.transform  `scale(${currZoom})`;
+        video.style.transform = `scale(${currZoom})`;
     }
 })
 // ------------------------------------------------------------------------
@@ -120,7 +121,7 @@ function capture() {
     ctx.translate(c.width / 2, c.height / 2);  // isse pointer center pr aega
     ctx.scale(currZoom, currZoom);             // zoom ki values dali jaengi
     // canvas ka size same rehta h, canvas ke andr jo draw hota h uska size scale hota h
-    ctx.translate(-c.width / 2, -c,height / 2);  //moving pointer to top-left
+    ctx.translate(-c.width / 2, -c.height / 2);  //moving pointer to top-left
     // ---------------------------------------
 
     ctx.drawImage(video, 0, 0);
@@ -128,7 +129,7 @@ function capture() {
     // ----= to capture image with filter --------------
     if(filter != ""){
         ctx.fillStyle = filter;
-        ctx.fillRect(0, 0, c.height, c.width);
+        ctx.fillRect(0, 0, c.width, c.height);
     }
     let a = document.createElement("a");
     a.href = c.toDataURL()
@@ -140,7 +141,7 @@ function capture() {
 
 function applyFilter(filterColor){
     let filterDiv = document.createElement("div");
-    filterDiv.classList.add(".filter-div");
+    filterDiv.classList.add("filter-div");
     filterDiv.style.backgroundColor = filterColor;
     body.appendChild(filterDiv);
 }
