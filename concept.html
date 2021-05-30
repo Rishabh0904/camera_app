@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <video autoplay controls></video>
+
+    <script>
+        // let constraints = {vedio : true};
+        let video = document.querySelector("video");
+        let constraints = {video : true};
+        // navigator is basically a javascript object present in browser
+        navigator.mediaDevices
+        // mediaDevices is a object in navigator which helps in accessing webcam
+        // getUserMedia returns promise and it req constraints to get permission from user which media user wants
+        .getUserMedia(constraints)
+        .then(function(mediaStream){
+            // mediaStream mein vedio input aaega
+            // srcObject is an alternative way of setting srcObject with object instead of setting src with url
+            video.srcObject = mediaStream;
+        })
+    </script>
+</body>
+</html>
