@@ -15,14 +15,32 @@ body{
     overflow: hidden;
     background-color:white;
 }
-/* .video-container .recording{
+
+.recording{
+    display: flex;
+    z-index: 0;
+}
+
+.blinkClass{
+    animation: blink 1s infinite;
+}
+
+.recorder{
+    height: 1rem;
+    width: 1rem;
+    color: red;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.video-container .recording{
     position : absolute;
-    top: 1rem;
-    right: 7rem;
+    top: 1%;
+    right: 48%;
     z-index: 1;
-    background-color: white;
-    border-radius: 15%
-} */
+    
+    border-radius: 10%
+}
 video {
     height: 100%;
     width: 100%;
@@ -132,4 +150,18 @@ video {
     width: 100vw;
     position: fixed;
     top: 0;
+}
+
+@keyframes blink{
+    0%{
+        background-color: red;
+    }
+
+    50%{
+        background-color: rgb(139, 30, 30)
+    }
+
+    100%{
+        background-color: red;
+    }
 }

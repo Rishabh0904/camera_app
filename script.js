@@ -5,6 +5,7 @@ let vidbtn = document.querySelector("button#video");
 let imgbtn = document.querySelector("button#image");
 let zoomIn = document.querySelector(".zoom-in");
 let zoomOut = document.querySelector(".zoom-out");
+let vedioContainer = document.querySelector(".video-container")
 let constraints = { video: true };
 let mediaRecorder;
 let isRecording = false;
@@ -51,11 +52,18 @@ zoomOut.addEventListener("click", function(){
 //  ---------------------video recording-----------------------
 vidbtn.addEventListener("click", function () {
     let innerDiv = vidbtn.querySelector("div");
+    let recordDiv;
     if (isRecording) {
         mediaRecorder.stop();
         isRecording = false;
         // vidbtn.innerText = "Record";
         innerDiv.classList.remove("record-animation");
+        // let blinker = document.querySelector(".recorder");
+        // blinker.classList.remove("blinkClass")
+        clearInterval(timerVar);
+        document.getElementById("timer").innerHTML = "";
+        let rem = document.querySelector(".recording");
+        rem.remove();
     } else {
         mediaRecorder.start();
         // triggers the start of recording
@@ -63,7 +71,15 @@ vidbtn.addEventListener("click", function () {
         removeFilter();
         isRecording = true;
         // vidbtn.innerText = "Recording...";
+        recordDiv = document.createElement("div");
+        recordDiv.classList.add("recording");
+        recordDiv.innerHTML = `<div class="recorder blinkClass"></div>
+        <div id="timer"></div>`
+        vedioContainer.appendChild(recordDiv)
+        // let blinker = document.querySelector(".recorder");
         innerDiv.classList.add("record-animation");
+        // blinker.classList.add("blinkClass")
+        timer();
     }
 })
 // --------------------------------------------------------------
@@ -152,3 +168,22 @@ function removeFilter(){
         filterDiv.remove();
     }
 }
+let timerVar = 0;
+function timer(){
+     timerVar = setInterval(countTimer, 1000);
+var totalSeconds = 0;
+function countTimer() {
+           ++totalSeconds;
+           var hour = Math.floor(totalSeconds /3600);
+           var minute = Math.floor((totalSeconds - hour*3600)/60);
+           var seconds = totalSeconds - (hour*3600 + minute*60);
+           if(hour < 10)
+             hour = "0"+hour;
+           if(minute < 10)
+             minute = "0"+minute;
+           if(seconds < 10)
+             seconds = "0"+seconds;
+           document.getElementById("timer").innerHTML = hour + ":" + minute + ":" + seconds;
+        }
+}
+
